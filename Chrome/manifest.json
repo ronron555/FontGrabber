@@ -4,7 +4,7 @@
   "description": "A browser extension that scraps CSS stylesheets, finds, and organize fonts to download",
   "manifest_version": 3,
   "author": "Ron Yitzhaki",
-  "permissions": ["scripting", "activeTab", "tabs", "storage"],
+  "permissions": ["storage"],
   "action": {
     "default_popup": "/src/html/popup.html",
     "default_title": "Font Grabber"
