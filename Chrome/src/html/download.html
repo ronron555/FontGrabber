@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Font Grabber - Downloader</title>
     <link rel="stylesheet" href="../css/style.css" />
+    <script src="../js/dist/jszip.min.js"></script>
+    <script src="../js/convert.js"></script>
   </head>
   <body class="FGbody">
     <div class="header">
@@ -16,9 +18,18 @@
         <h2 class="programTitle">Downloader</h2>
         <span class="switchText">Click to switch to Converter</span>
       </div>
+      <div id="buttonsDiv">
+        <button class="button button-left" id="downloadSelected">
+          Download Original
+        </button>
+        <button class="button button-right" id="switchConverter">
+          Download Converted
+        </button>
+        <p id="info"></p>
+      </div>
       <span class="roboto-light">Ron Yitzhaki © 2024</span>
     </div>
     <div id="dynamicDiv"></div>
-    <script src="../js/script.js"></script>
+    <script src="../js/download.js"></script>
   </body>
 </html>

@@ -1,3 +1,5 @@
+var downloadList = [];
+
 function createDownloadList(sortedFonts) {
   let fontNames = Object.keys(sortedFonts).sort();
 
@@ -35,7 +37,34 @@ function createDownloadList(sortedFonts) {
       }
 
       downloadButton.onclick = () => {
-        gotoURL(downloadLink);
+        if (!downloadList.includes(downloadLink)) {
+          // console.log("add index " + downloadList.length);
+          downloadList.push(downloadLink);
+          downloadButton.classList.add("buttonSelected");
+          // console.log(downloadList);
+        } else {
+          let index = downloadList.indexOf(downloadLink);
+          // console.log("remove index " + index);
+          downloadlist = downloadList.splice(index, 1);
+          downloadButton.classList.remove("buttonSelected");
+          // console.log(downloadList);
+        }
+        if (downloadList.length > 0) {
+          document.getElementById("programDiv").style.display = "none";
+          document.getElementById("buttonsDiv").style.display = "block";
+          if (downloadList.length == 1) {
+            document.getElementById("downloadSelected").innerHTML =
+              "Download Original";
+          } else {
+            document.getElementById("downloadSelected").innerHTML =
+              "Download Original (ZIP)";
+          }
+        } else {
+          document.getElementById("programDiv").style.display = "block";
+          document.getElementById("buttonsDiv").style.display = "none";
+        }
+
+        // gotoURL(downloadLink);
       };
       downloadButton.classList.add("downloadButton");
       downloadDiv.appendChild(downloadButton);
@@ -73,6 +102,80 @@ function createDownloadList(sortedFonts) {
     mainDiv.appendChild(previewDiv);
 
     document.getElementById("dynamicDiv").appendChild(mainDiv);
+  });
+}
+
+function zipAndDownload() {
+  var zip = new JSZip();
+
+  function request(url) {
+    return new Promise((resolve) => {
+      var httpRequest = new XMLHttpRequest();
+      httpRequest.open("GET", url, true);
+      httpRequest.responseType = "blob";
+      httpRequest.onprogress = (e) => {
+        document.getElementById("info").innerHTML = "Downloading Fonts.. ";
+      };
+      httpRequest.onload = (e) => {
+        document.getElementById("info").innerHTML = "";
+        var filename = url.substring(url.lastIndexOf("/") + 1).split("?")[0];
+        zip.file(filename, httpRequest.response);
+        resolve();
+      };
+      httpRequest.send();
+    });
+  }
+
+  Promise.all(
+    downloadList.map(function (url) {
+      return request(url);
+    })
+  ).then(() => {
+    console.log(zip);
+    zip
+      .generateAsync({
+        type: "blob",
+      })
+      .then((content) => {
+        let downloadUrl = URL.createObjectURL(content);
+        gotoURL(downloadUrl);
+        // a.download = "folder" + new Date().getTime();
+        // a.innerHTML = "download " + a.download;
+      });
+  });
+}
+
+function convertSelected() {
+  function request(url, userId) {
+    return new Promise(async (resolve) => {
+      var httpRequest = new XMLHttpRequest();
+      httpRequest.open("GET", url, true);
+      httpRequest.responseType = "blob";
+      httpRequest.onprogress = (e) => {
+        document.getElementById("info").innerHTML = "Downloading Fonts.. ";
+      };
+      httpRequest.onload = async (e) => {
+        console.log("START UPLOAD FILE");
+        let filename = url.substring(url.lastIndexOf("/") + 1).split("?")[0];
+        let file = new File([httpRequest.response], filename);
+        await uploadFile(userId, file);
+        resolve();
+      };
+      httpRequest.send();
+    });
+  }
+
+  getUserId.then((userId) => {
+    (async () => {
+      Promise.all(
+        downloadList.map(async (url) => {
+          return request(url, userId);
+        })
+      ).then(() => {
+        console.log("DONE UPLOPADING");
+        convertFiles(userId);
+      });
+    })();
   });
 }
 
@@ -122,4 +225,21 @@ window.onload = function () {
 
 document.getElementById("programDiv").addEventListener("click", () => {
   window.location.href = "convert.html";
+});
+
+document.getElementById("switchConverter").addEventListener("click", () => {
+  // window.location.href = "convert.html";
+  convertSelected();
+});
+
+document.getElementById("downloadSelected").addEventListener("click", () => {
+  if (downloadList.length > 1) {
+    zipAndDownload();
+  } else {
+    downloadList.forEach((link) => {
+      if (link !== "") {
+        gotoURL(link);
+      }
+    });
+  }
 });

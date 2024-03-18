@@ -171,56 +171,41 @@
   padding-top: 2em;
 }
 
-#button1 {
+.button-popup {
+  margin-top: -0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.button {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
   font-style: normal;
-  margin-top: -0.5rem;
-  margin-bottom: 0.55rem;
   border-style: solid;
   border-color: #ffffff88;
   border-width: 1.5px;
+  border-radius: 100rem;
   background: #ffffff00;
   color: #ffffffdd;
+  font-size: 1.3rem;
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  transition: 0.2s;
+}
+
+.button:hover {
+  background: white !important;
+  border-color: white !important;
+  color: #004142 !important;
+  font-weight: 500;
+  padding: 0.4rem 1.2rem 0.4rem 1.2rem !important;
+  filter: drop-shadow(0px 0px 10px #ffffff) !important;
+}
+
+.button-left {
   border-radius: 100rem 0 0 100rem;
-  font-size: 1.3rem;
-  padding: 0.4rem 1rem 0.4rem 1rem;
-  transition: 0.2s;
 }
 
-#button1:hover {
-  background: white !important;
-  border-color: white !important;
-  color: #004142 !important;
-  font-weight: 500;
-  padding: 0.4rem 1.2rem 0.4rem 1.2rem !important;
-  filter: drop-shadow(0px 0px 10px #ffffff) !important;
-}
-
-#button2 {
-  font-family: "Roboto", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-  margin-top: -0.5rem;
-  margin-bottom: 0.55rem;
-  border-style: solid;
-  border-color: #ffffff88;
-  border-width: 1.5px;
-  background: #ffffff00;
-  color: #ffffffdd;
+.button-right {
   border-radius: 0 100rem 100rem 0;
-  font-size: 1.3rem;
-  padding: 0.4rem 1rem 0.4rem 1rem;
-  transition: 0.2s;
-}
-
-#button2:hover {
-  background: white !important;
-  border-color: white !important;
-  color: #004142 !important;
-  font-weight: 500;
-  padding: 0.4rem 1.2rem 0.4rem 1.2rem !important;
-  filter: drop-shadow(0px 0px 10px #ffffff) !important;
 }
 
 #button3 {
@@ -336,12 +321,24 @@
 }
 
 .downloadButton:hover {
-  background: white !important;
+  background: #ffffffaa;
   border-color: white !important;
   color: #004142 !important;
   font-weight: 500;
   padding: 0.3rem 1rem 0.3rem 1rem !important;
   filter: drop-shadow(0px 0px 10px #ffffff) !important;
+}
+
+.buttonSelected {
+  background: #ffffffaa !important;
+  border-color: #00414288 !important;
+  color: #004142 !important;
+  font-weight: 500;
+  padding: 0.3rem 1rem 0.3rem 1rem !important;
+}
+
+.buttonSelected:hover {
+  background: white !important;
 }
 
 .fontPreview {
@@ -377,4 +374,17 @@
   text-align: center;
   line-height: 1rem;
   opacity: 0.5;
+}
+
+#buttonsDiv {
+  display: none;
+  margin-top: 0.7rem;
+}
+
+#info {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  text-align: center;
+  line-height: 0;
 }

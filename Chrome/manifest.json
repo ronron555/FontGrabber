@@ -7,7 +7,7 @@
   "permissions": ["scripting", "activeTab", "tabs", "storage"],
   "action": {
     "default_popup": "/src/html/popup.html",
-    "default_title": "Ext Test"
+    "default_title": "Font Grabber"
   },
   "content_scripts": [
     {

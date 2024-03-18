@@ -97,60 +97,14 @@ function getDownloadUrl(userId) {
     });
 }
 
-// document.getElementById("button1").addEventListener("click", async () => {
-//   console.log(document.getElementById("fontUpload").files);
-//   document.getElementById("info").innerHTML = "Uploading Fonts";
-//   getUserId.then((userId) => {
-//     (async () => {
-//       for (
-//         let i = 0;
-//         i < document.getElementById("fontUpload").files.length;
-//         i++
-//       ) {
-//         if (document.getElementById("fontUpload").files[i].size > 15728640) {
-//           alert("One of the files you uploaded was too big.");
-//           location.reload();
-//           break;
-//         }
-//         await uploadFile(
-//           userId,
-//           document.getElementById("fontUpload").files[i]
-//         );
-//       }
-//       console.log("DONE");
-//       document.getElementById("info").innerHTML = "Converting Fonts: 0%";
-//       convertFiles(userId);
-//     })();
-//     //   console.log(userId);
-//     //   uploadFile(userId);
-//   });
-// });
-
-// document.getElementById("uploadFiles").addEventListener("click", () => {
-//   document.getElementById("fontUpload").click();
-// });
-
-// document.getElementById("fontUpload").addEventListener("change", (value) => {
-//   if (fontUpload.files.length == 1) {
-//     document.getElementById("val").innerHTML = "1 file selected";
-//   } else if (fontUpload.files.length > 1) {
-//     document.getElementById("val").innerHTML =
-//       fontUpload.files.length + " files selected";
-//   }
-// });
-
 document.getElementById("dragzone").addEventListener("drop", (ev) => {
   if (ev.dataTransfer.items) {
     // Use DataTransferItemList interface to access the file(s)
     getUserId.then((userId) => {
       (async () => {
-        // }
-        // console.log([...ev.dataTransfer.items]);
-        // for (const item in [...ev.dataTransfer.items]) {
-        // console.log(item);
         await Promise.all(
           [...ev.dataTransfer.items].map(async (item) => {
-            // [...ev.dataTransfer.items].forEach(function (item, i) {
+            // console.log(item);
             // If dropped items aren't files, reject them
             if (item.kind === "file") {
               const file = item.getAsFile();
@@ -180,7 +134,7 @@ document.getElementById("dragzone").addEventListener("drop", (ev) => {
         );
         console.log("DONE UPLOPADING");
         document.getElementById("info").innerHTML = "Converting Fonts: 0%";
-        await convertFiles(userId);
+        convertFiles(userId);
       })();
     });
   }
