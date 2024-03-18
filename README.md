@@ -1,6 +1,6 @@
 # Font Grabber
 
-A browser Extension that scraps the CSS stylesheets, finds, and organize the font links for you to download. Also, it can convert the fonts (Powered by Transfonter) to TTF using the same interface.
+A browser extension that scraps CSS stylesheets, finds, and organize fonts to download. Also, it can convert the fonts to TTF (Powered by Transfonter) using the same interface.
 
 ## TODO
 

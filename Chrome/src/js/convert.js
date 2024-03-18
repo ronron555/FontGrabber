@@ -22,8 +22,6 @@ const getUserId = new Promise((resolve) => {
 });
 
 async function uploadFile(userId, file) {
-  // var input = document.getElementById("fontUpload");
-
   var data = new FormData();
   data.append("user_id", userId);
   data.append("files", file);
@@ -84,78 +82,19 @@ function getDownloadUrl(userId) {
       if (data["status"] == "process") {
         document.getElementById("info").innerHTML =
           "Converting Fonts: " + data["progress"] + "%";
-        setTimeout(getDownloadUrl(userId), 500);
+        setTimeout(() => {
+          getDownloadUrl(userId);
+        }, 500);
       } else if (data["status"] == "success") {
         let result = data["result"];
         document.getElementById("info").innerHTML = "Fonts Converted!";
         window.location.replace("https://transfonter.org/" + result);
         setTimeout(() => {
           document.getElementById("info").innerHTML = "";
-          document.getElementById("dragText").classList.remove("hidden");
+          if (window.location.pathname == "/src/html/convert.html") {
+            document.getElementById("dragText").classList.remove("hidden");
+          }
         }, 3000);
       }
     });
 }
-
-document.getElementById("dragzone").addEventListener("drop", (ev) => {
-  if (ev.dataTransfer.items) {
-    // Use DataTransferItemList interface to access the file(s)
-    getUserId.then((userId) => {
-      (async () => {
-        await Promise.all(
-          [...ev.dataTransfer.items].map(async (item) => {
-            // console.log(item);
-            // If dropped items aren't files, reject them
-            if (item.kind === "file") {
-              const file = item.getAsFile();
-              let fileExt = file.name
-                .split(".")
-                .slice(-1)
-                .toString()
-                .toLowerCase();
-              if (
-                fileExt == "ttf" ||
-                fileExt == "otf" ||
-                fileExt == "woff" ||
-                fileExt == "woff2" ||
-                fileExt == "svg"
-              ) {
-                if (file.size > 15728640) {
-                  alert("One of the files you uploaded was too big.");
-                } else {
-                  // console.log(file);
-                  document.getElementById("info").innerHTML =
-                    "Uploading Fonts.. ";
-                  await uploadFile(userId, file);
-                }
-              }
-            }
-          })
-        );
-        console.log("DONE UPLOPADING");
-        document.getElementById("info").innerHTML = "Converting Fonts: 0%";
-        convertFiles(userId);
-      })();
-    });
-  }
-});
-
-"dragenter dragstart dragend dragleave dragover drag drop"
-  .split(" ")
-  .forEach((e) => {
-    document.getElementById("dragzone").addEventListener(e, (ev) => {
-      // console.log(e);
-      ev.preventDefault();
-      if (e == "dragover" || e == "dragenter") {
-        document.getElementById("dragzone").classList.add("form-dragging");
-        document.getElementById("dragText").classList.add("hidden");
-      }
-      if (e == "dragleave" || e == "dragend" || e == "drop") {
-        document.getElementById("dragzone").classList.remove("form-dragging");
-        document.getElementById("dragText").classList.remove("hidden");
-      }
-      if (e == "drop") {
-        document.getElementById("dragText").classList.add("hidden");
-      }
-    });
-  });
