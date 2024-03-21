@@ -4,7 +4,7 @@ A browser extension that scraps CSS stylesheets, finds, and organize fonts to do
 
 ## TODO
 
-- [ ] Implement ActiveTab
+- [x] Implement ActiveTab
 - [ ] Check if there is an easy option to install
 - [ ] Build a landing page to download the extension
 - [ ] Firefox implementation

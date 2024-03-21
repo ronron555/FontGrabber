@@ -91,3 +91,14 @@ document.getElementById("button1").addEventListener("click", scanWebsite);
 document.getElementById("button2").addEventListener("click", () => {
   gotoURL("src/html/convert.html");
 });
+
+// Inject script when popup shows
+chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  var activeTab = tabs[0];
+  chrome.scripting
+    .executeScript({
+      target: { tabId: activeTab.id },
+      files: ["/src/js/content.js"],
+    })
+    .then(() => console.log("script injected"));
+});
